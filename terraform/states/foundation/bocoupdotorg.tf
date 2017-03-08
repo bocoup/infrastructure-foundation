@@ -3,7 +3,7 @@
 # This can go away when there is an actual bocoup.org website.
 #
 resource "aws_s3_bucket" "bocoup-org" {
-  bucket = "bocoup.org"
+  bucket = "${var.domain}"
   website {
     redirect_all_requests_to = "bocoup.com"
   }
@@ -14,9 +14,9 @@ resource "aws_s3_bucket" "bocoup-org" {
 # This allows redirecting to bocoup.com without a server.
 #
 resource "aws_route53_record" "bocoup-org_A_bocoup-com" {
-  zone_id = "${var.domain_zone_id}"
+  zone_id = "${aws_route53_zone.main.id}"
   type = "A"
-  name = "bocoup.org"
+  name = "${var.domain}"
   alias {
     name = "${aws_s3_bucket.bocoup-org.website_domain}"
     zone_id = "${aws_s3_bucket.bocoup-org.hosted_zone_id}"
@@ -28,7 +28,7 @@ resource "aws_route53_record" "bocoup-org_A_bocoup-com" {
 # Redirect www.bocoup.org to bocoup.com
 #
 resource "aws_route53_record" "bocoup-org_CNAME_www-bocoup-com" {
-  zone_id = "${var.domain_zone_id}"
+  zone_id = "${aws_route53_zone.main.id}"
   type = "CNAME"
   name = "www"
   ttl = "1"

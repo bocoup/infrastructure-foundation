@@ -1,5 +1,15 @@
+##
+# DNS zone for primary domain.
+#
+resource "aws_route53_zone" "main" {
+  name = "${var.domain}"
+  lifecycle {
+    prevent_destroy = true
+  }
+}
+
 resource "aws_route53_record" "bocoup-org_MX_bocoup-com" {
-  zone_id = "${var.domain_zone_id}"
+  zone_id = "${aws_route53_zone.main.id}"
   name = "${var.domain}"
   type = "MX"
   ttl = "1"
