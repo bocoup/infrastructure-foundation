@@ -10,7 +10,7 @@
 
 ## Managing Infrastructure
 
-#### init
+### init
 Running `state=<name> make init` configures your local environment to access
 the terraform state as stored in S3. This is a prequisite before managing any
 of our states.
