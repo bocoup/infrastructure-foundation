@@ -4,18 +4,19 @@
 variable "name" { }
 variable "azs" { type = "list" }
 variable "vpc_id" { }
-variable "cidrs" { type = "list" }
+variable "cidr_blocks" { type = "list" }
 
 output "ids" { value = ["${aws_subnet.main.*.id}"] }
+output "cidr_blocks" { value = ["${aws_subnet.main.*.cidr_block}"] }
 output "route_table_id" { value = "${aws_route_table.main.id}" }
 
 ##
 # Create one subnet for each availablity zone.
 #
 resource "aws_subnet" "main" {
-  count = "${length(var.cidrs)}"
+  count = "${length(var.cidr_blocks)}"
   vpc_id = "${var.vpc_id}"
-  cidr_block = "${element(var.cidrs, count.index)}"
+  cidr_block = "${element(var.cidr_blocks, count.index)}"
   availability_zone = "${element(var.azs, count.index)}"
   map_public_ip_on_launch = true
   tags {
@@ -85,7 +86,7 @@ resource "aws_route" "main" {
 # Associate route tables with subnets.
 #
 resource "aws_route_table_association" "main" {
-  count = "${length(var.cidrs)}"
+  count = "${length(var.cidr_blocks)}"
   subnet_id = "${element(aws_subnet.main.*.id, count.index)}"
   route_table_id = "${aws_route_table.main.id}"
 }
