@@ -11,3 +11,8 @@ module "subnet" {
   vpc_id = "${module.vpc.id}"
   cidr_blocks = "${var.subnet_cidr_blocks}"
 }
+
+resource "aws_s3_bucket" "main" {
+  acl = "public-read"
+  bucket = "image-annotator-assets"
+}
