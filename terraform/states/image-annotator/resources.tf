@@ -96,15 +96,15 @@ resource "aws_instance" "staging" {
 resource "aws_route53_record" "ajl-bocoup-org_A_ajl-bocoup-org" {
   zone_id = "${data.terraform_remote_state.foundation.domain_zone_id}"
   type = "A"
-  name = "production"
+  name = "ajl"
   ttl = "1"
   records = ["${aws_instance.production.public_ip}"]
 }
 
-resource "aws_route53_record" "ajl-staging-bocoup-org_A_ajl-staging-bocoup-org" {
+resource "aws_route53_record" "ajl-bocoup-org_A_ajl-staging-bocoup-org" {
   zone_id = "${data.terraform_remote_state.foundation.domain_zone_id}"
   type = "A"
-  name = "staging"
+  name = "ajl-staging"
   ttl = "1"
   records = ["${aws_instance.staging.public_ip}"]
 }
