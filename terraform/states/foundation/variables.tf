@@ -1,6 +1,10 @@
-# These are populated by the variables.tfvars file one directory up.
-variable "profile" { }
-variable "region" { }
+# Which AWS profile to use for authentication
+variable "profile" {
+  default = "foundation"
+}
+variable "region" {
+  default = "us-east-1"
+}
 
 # Used as a prefix for tagging in many locations.
 variable "name" {
@@ -12,11 +16,16 @@ variable "domain" {
   default = "bocoup.org"
 }
 
-##
-# Provide credentials for AWS from ~/.aws/credentials
-# with the correct profile name.
-#
 provider "aws" {
-  profile = "${var.profile}"
-  region = "${var.region}"
+  profile = "foundation"
+  region = "us-east-1"
+}
+
+terraform {
+  backend "s3" {
+    bucket = "foundation-terraform"
+    key = "foundation.tfstate"
+    region = "us-east-1"
+    profile = "foundation"
+  }
 }

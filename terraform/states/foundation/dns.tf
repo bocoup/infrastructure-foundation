@@ -2,7 +2,7 @@
 # DNS zone for primary domain.
 #
 resource "aws_route53_zone" "main" {
-  name = "${var.domain}"
+  name = "${var.domain}."
   lifecycle {
     prevent_destroy = true
   }
