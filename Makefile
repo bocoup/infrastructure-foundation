@@ -1,19 +1,16 @@
-.PHONY: init plan apply push
+.PHONY: init plan apply push clean
 
 init:
-	cd terraform/states/$(state) && terraform get
-	cd terraform/states/$(state) && terraform remote config \
-	   -backend=s3 \
-		 -backend-config="bucket=foundation-terraform" \
-		 -backend-config="key=$(state).tfstate" \
-		 -backend-config="profile=foundation" \
-		 -backend-config="region=us-east-1"
+	cd terraform/states/$(state) && terraform init -get=true -backend=true
 
 plan:
-	cd terraform/states/$(state) && terraform plan -out $(state).plan -var-file ../../variables.tfvars
+	cd terraform/states/$(state) && terraform plan -out $(state).plan
 
 apply:
 	cd terraform/states/$(state) && terraform apply $(state).plan
 
 push:
 	cd terraform/states/$(state) && terraform remote push
+
+clean:
+	find . -name '.terraform' -print0 | xargs -0 rm -rf
