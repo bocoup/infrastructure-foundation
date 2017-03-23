@@ -173,3 +173,8 @@ EOF
 resource "aws_iam_user" "backup" {
   name = "${var.name}-backup"
 }
+
+resource "aws_iam_user_policy_attachment" "backup" {
+  user = "${aws_iam_user.backup.name}"
+  policy_arn = "${aws_iam_policy.backup.arn}"
+}
