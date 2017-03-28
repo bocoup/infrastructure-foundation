@@ -16,12 +16,6 @@ resource "aws_iam_role" "backup" {
 EOF
 }
 
-resource "aws_iam_policy_attachment" "backup" {
-  name = "${var.name}-backup"
-  roles = ["${aws_iam_role.backup.name}"]
-  policy_arn = "${aws_iam_policy.backup.arn}"
-}
-
 resource "aws_iam_instance_profile" "backup" {
   name = "${var.name}-backup"
   roles = ["${aws_iam_role.backup.name}"]
@@ -54,6 +48,11 @@ EOF
 # This user owns the access keys that allow local devs to load production backups
 resource "aws_iam_user" "backup" {
   name = "${var.name}-backup"
+}
+
+resource "aws_iam_role_policy_attachment" "backup" {
+  role = "${aws_iam_role.backup.id}"
+  policy_arn = "${aws_iam_policy.backup.arn}"
 }
 
 resource "aws_iam_user_policy_attachment" "backup" {
