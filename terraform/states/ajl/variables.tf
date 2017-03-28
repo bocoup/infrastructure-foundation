@@ -1,6 +1,6 @@
 # Used as a prefix for tagging in many locations.
 variable "name" {
-  default = "image-annotator"
+  default = "ajl"
 }
 
 # This is the network all of our services are hosted in.
@@ -35,7 +35,7 @@ provider "aws" {
 terraform {
   backend "s3" {
     bucket = "foundation-terraform"
-    key = "image-annotator.tfstate"
+    key = "ajl.tfstate"
     region = "us-east-1"
     profile = "foundation"
   }
