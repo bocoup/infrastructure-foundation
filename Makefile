@@ -1,16 +1,17 @@
-.PHONY: init plan apply push clean
+STATES_DIR = terraform/states
+STATES = $(notdir $(wildcard $(STATES_DIR)/*))
+STATE_FROM_TARGET = $(firstword $(subst /, ,$1))
 
-init:
-	cd terraform/states/$(state) && terraform init -get=true -backend=true
+.PHONY: init plan apply %/init %/plan %/apply
+init plan apply: $(addsuffix /init, $(STATES))
 
-plan:
+%/init %/plan %/apply %/cowboy: state = $(call STATE_FROM_TARGET, $@)
+
+%/init:
+	cd terraform/states/$(state) && terraform init
+
+%/plan:
 	cd terraform/states/$(state) && terraform plan -out $(state).plan
 
-apply:
+%/apply:
 	cd terraform/states/$(state) && terraform apply $(state).plan
-
-push:
-	cd terraform/states/$(state) && terraform remote push
-
-clean:
-	find . -name '.terraform' -print0 | xargs -0 rm -rf
