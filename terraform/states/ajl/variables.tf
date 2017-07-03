@@ -9,6 +9,14 @@ variable "name" {
 }
 
 ##
+# The name of the master private key to use for all compute resources. This is
+# generated once by hand in the AWS EC2 web UI.
+#
+variable "key_name" {
+  default = "ajl"
+}
+
+##
 # This tells Terraform how to authenticate for AWS resources. It expects
 # an entry in ~/.aws/credentials with a matching profile. You can create
 # this with `aws configure --profile foundation`.
