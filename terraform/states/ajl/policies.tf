@@ -18,7 +18,7 @@ EOF
 
 resource "aws_iam_instance_profile" "backup" {
   name = "${var.name}-backup"
-  roles = ["${aws_iam_role.backup.name}"]
+  role = "${aws_iam_role.backup.name}"
 }
 
 resource "aws_iam_policy" "backup" {
