@@ -3,9 +3,7 @@
 
 ## Bootstrapping
 1. Install [AWSCLI] & [Terraform]
-2. Log into AWS EC2 console, create a key pair titled "default".
-   Download the key and add to your ssh-agent: `ssh-add /path/to/key.pem`
-3. Ensure `~/.aws/credentials` has a profile with administrative
+2. Ensure `~/.aws/credentials` has a profile with administrative
    access keys that match `profile` in `terraform/variables.tfvars`
 
 ### Commands Available
