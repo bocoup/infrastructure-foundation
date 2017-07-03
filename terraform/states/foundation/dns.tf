@@ -8,7 +8,7 @@ resource "aws_route53_zone" "main" {
   }
 }
 
-resource "aws_route53_record" "bocoup-org_MX_bocoup-com" {
+resource "aws_route53_record" "bocoup-org_MX_bocoup-org" {
   zone_id = "${aws_route53_zone.main.id}"
   name = "${var.domain}"
   type = "MX"
