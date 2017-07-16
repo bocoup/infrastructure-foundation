@@ -21,20 +21,9 @@ variable "subnet_cidr_blocks" {
 }
 
 ##
-# Each subnet lives in an availability zone. When subnets are created we match
-# the index of this array with the array of subnets.
+# Get all availability zones from AWS for the region we are in
 #
-# TODO: determine if terraform has better support for map primitives such that
-#       this separation is no longer needed.
-#
-variable "azs" {
-  type = "list"
-  default = [
-    "us-east-1a",
-    "us-east-1b",
-    "us-east-1c"
-  ]
-}
+data "aws_availability_zones" "available" {}
 
 module "vpc" {
   source = "../../modules/aws/vpc"
@@ -45,7 +34,7 @@ module "vpc" {
 module "subnet" {
   source = "../../modules/aws/subnet"
   name = "${var.name}"
-  azs = "${var.azs}"
+  azs = "${data.aws_availability_zones.available.names}"
   vpc_id = "${module.vpc.id}"
   cidr_blocks = "${var.subnet_cidr_blocks}"
 }
