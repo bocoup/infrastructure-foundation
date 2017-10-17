@@ -3,23 +3,24 @@
 
 ## Bootstrapping
 1. Install [AWSCLI] & [Terraform]
-2. Ensure `~/.aws/credentials` has a profile with administrative
-   access keys that match `profile` in `terraform/variables.tfvars`
+2. Ensure `~/.aws/credentials` has a profile with administrative access keys
+   that match the `profile` value inside `provider "aws" {}` for the project
+   you want to manage (`terraform/<project>/variables.tfvars`).
 
 ### Commands Available
 The most common lifecycle commands `init`, `plan`, and `apply` have been aliased
 in the project's Makefile. If more complex management is needed, just `cd` into
-the appropriate `terraform/state/` folder and run terraform directly.
+the appropriate `terraform/project/` folder and run terraform directly.
 
-#### make [state]/init
-Prepare Terraform to manage the state you've specified. This must be run once
+#### make <project>/init
+Prepare Terraform to manage the project you've specified. This must be run once
 before the other commands are accessible.
 
-#### make [state]/plan
+#### make <project>/plan
 Compare your local configuration to the actual deployed infrastructure and
 prepare a plan to reconcile any differences.
 
-#### make [state]/apply
+#### make <project>/apply
 After verifying plan, execute the changes.
 
 [AWSCLI]: http://docs.aws.amazon.com/cli/latest/userguide/installing.html

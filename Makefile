@@ -1,17 +1,16 @@
-STATES_DIR = terraform/states
-STATES = $(notdir $(wildcard $(STATES_DIR)/*))
-STATE_FROM_TARGET = $(firstword $(subst /, ,$1))
+PROJECTS_DIR = terraform/projects
+PROJECTS = $(notdir $(wildcard $(PROJECTS_DIR)/*))
+PROJECT_FROM_TARGET = $(firstword $(subst /, ,$1))
 
 .PHONY: init plan apply %/init %/plan %/apply
-init plan apply: $(addsuffix /init, $(STATES))
 
-%/init %/plan %/apply %/cowboy: state = $(call STATE_FROM_TARGET, $@)
+%/init %/plan %/apply: project = $(call PROJECT_FROM_TARGET, $@)
 
 %/init:
-	cd terraform/states/$(state) && terraform init
+	cd terraform/projects/$(project) && terraform init
 
 %/plan:
-	cd terraform/states/$(state) && terraform plan -out $(state).plan
+	cd terraform/projects/$(project) && terraform plan -out $(project).plan
 
 %/apply:
-	cd terraform/states/$(state) && terraform apply $(state).plan
+	cd terraform/projects/$(project) && terraform apply $(project).plan
