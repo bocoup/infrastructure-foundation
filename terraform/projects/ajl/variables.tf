@@ -41,21 +41,6 @@ terraform {
 }
 
 ##
-# This give us access to the state file for the foundation project.
-# That makes it possible for us to create DNS entries on bocoup.org,
-# which is owned by the foundation.
-#
-data "terraform_remote_state" "foundation" {
-  backend = "s3"
-  config {
-    bucket = "foundation-terraform"
-    key = "foundation.tfstate"
-    region = "us-east-1"
-    profile = "foundation"
-  }
-}
-
-##
 # This locates the AMI for the Ubuntu image we'd like to use on all of our VMs
 # for this project.
 #
