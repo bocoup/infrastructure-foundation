@@ -43,18 +43,10 @@ resource "aws_route53_record" "ajl-ai_A_ajl-ai" {
   records = ["${aws_instance.production.public_ip}"]
 }
 
-resource "aws_route53_record" "ajl-bocoup-org_A_ajl-bocoup-org" {
-  zone_id = "${data.terraform_remote_state.foundation.domain_zone_id}"
+resource "aws_route53_record" "ajl-ai_CNAME_staging-ajl-ai" {
+  zone_id = "${aws_route53_zone.ajl-ai.id}"
   type = "A"
-  name = "ajl"
-  ttl = "1"
-  records = ["${aws_instance.production.public_ip}"]
-}
-
-resource "aws_route53_record" "ajl-bocoup-org_A_ajl-staging-bocoup-org" {
-  zone_id = "${data.terraform_remote_state.foundation.domain_zone_id}"
-  type = "A"
-  name = "ajl-staging"
+  name = "staging"
   ttl = "1"
   records = ["${aws_instance.staging.public_ip}"]
 }
