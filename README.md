@@ -1,5 +1,5 @@
 ## This repository is archived
-Due to the environment it manages being phased out, the code for its infrastructure is being archived.
+Due to the environment it manages (Bocoup-Foundation) being phased out, this code for managing its infrastructure is being archived.
 
 # Bocoup Foundation Inc
 > our infrastructure, as code
