@@ -1,3 +1,6 @@
+## This repository is archived
+Due to the environment it manages being phased out, the code for its infrastructure is being archived.
+
 # Bocoup Foundation Inc
 > our infrastructure, as code
 
